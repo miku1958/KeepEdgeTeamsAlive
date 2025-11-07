@@ -36,7 +36,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 		Task {
 			while true {
-				let teamsIsRunning = NSWorkspace.shared.runningApplications.compactMap(\.localizedName).contains("Microsoft Teams")
+				let teamsIsRunning = NSWorkspace.shared.runningApplications.compactMap(\.localizedName).contains {
+					$0.contains("Microsoft Teams")
+				}
 				if !teamsIsRunning {
 					await MainActor.run {
 						let configuration = NSWorkspace.OpenConfiguration()
